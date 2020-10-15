@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_psdc_notes_manager,psdc.notes.manager,model_psdc_notes_note,psdc_notes_manager,1,1,1,1
+access_psdc_notes_validate_notes_user,psdc.notes.validate.notes.user,model_psdc_notes_note,psdc_notes_validate_notes_user,0,1,0,0
+access_psdc_notes_cancel_notes_user,psdc.notes.cancel.notes.user,model_psdc_notes_note,psdc_notes_cancel_notes_user,0,1,0,0
+access_psdc_notes_print_notes_user,psdc.notes.print.notes.user,model_psdc_notes_note,psdc_notes_print_notes_user,0,1,0,0
+access_psdc_notes_send_notes_user,psdc.notes.send.notes.user,model_psdc_notes_note,psdc_notes_send_notes_user,0,1,0,0
+access_psdc_notes_user,psdc.notes.user,model_psdc_notes_note,psdc_notes_user,1,0,0,0

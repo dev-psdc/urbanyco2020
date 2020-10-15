@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="fpi_pos_user" model="res.groups">
+        <field name="name">Permisos para enviar a la cola de impresiones desde el POS</field>
+        <field name="category_id" ref="base.module_category_point_of_sale"/>
+        <field name="implied_ids" eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="psdc_notes.action_report_note"
+            string="Nota o Documento"
+            model="psdc_notes.note" 
+            report_type="qweb-pdf"
+            file="psdc_notes.note_report" 
+            name="psdc_notes.note_report"
+            print_report_name="'Nota - %s' % (object.number)"
+        />
+    </data>
+</odoo>

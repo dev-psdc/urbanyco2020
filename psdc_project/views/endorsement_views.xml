@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_project.endorsement_reason_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.endorsement.reason.form</field>
+            <field name='model'>psdc_project.endorsement_reason</field>
+            <field name='arch' type='xml'>
+                <form string="Nuevo Motivo de Endoso">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="reason" string="Motivo"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.endorsement_reason_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Motivos de Endosos</field>
+            <field name='res_model'>psdc_project.endorsement_reason</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+        <record
+            id='psdc_project.endorsement_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.endorsement.form</field>
+            <field name='model'>psdc_project.endorsement</field>
+            <field name='arch' type='xml'>
+                <form string="Nueva Endoso">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number" string="N de Endoso"/>
+                                <field name="endorsement_reason_id" string="Motivo del Endoso"/>
+                                <field name="observation" string="Observación"/>
+                            </group>
+                            <group>
+                                <field name="endorsement_file" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.endorsement_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Endosos</field>
+            <field name='res_model'>psdc_project.endorsement</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+    </data>
+</odoo>

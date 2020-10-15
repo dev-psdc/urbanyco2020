@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='neonety_crm_substage.crm_lead_form' model='ir.ui.view'>
+            <field name='name'>neonety.crm.substage.crm.lead.form</field>
+            <field name='model'>crm.lead</field>
+            <field name='inherit_id' ref='crm.crm_case_form_view_oppor'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='priority']" position='after'>
+                    <field name="crm_substage_id" options="{ 'no_create': True, 'no_open': True }" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

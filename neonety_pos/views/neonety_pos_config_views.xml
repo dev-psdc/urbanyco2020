@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_neonety_pos_config_form" model="ir.ui.view" >
+        <field name="name">neonety.pos.config.form.view</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='order_reference']" position="inside">
+                <div class="o_setting_right_pane">
+                    <label string="Usar campos del módulo Neonety Panamá"/>
+                    <div class="text-muted">
+                        Estos son campos asociados a la distribución geográfica como Provincia, Distrito, Corregimiento y otros campos como RUC y DV
+                    </div>
+                    <div class="content-group mt16">
+                        <field name='iface_neonety_fields' />
+                    </div>
+                    <hr />
+                </div>
+                <div class="o_setting_right_pane">
+                    <label string="No mezclar productos en el POS"/>
+                    <div class="text-muted">
+                        Al seleccionar esta opción los productos no se mezclaran cuando se esten seleccionando en el punto de venta
+                    </div>
+                    <div class="content-group mt16">
+                        <field name='iface_no_merge_products' />
+                    </div>
+                    <hr />
+                </div>
+                <div class="o_setting_right_pane">
+                    <label string="Permitir asignar un cliente por defecto"/>
+                    <div class="content-group mt16">
+                        <field name='iface_allow_default_partner' />
+                        <br />
+                        <label string="Seleccionar cliente por defecto"/>
+                        <br />
+                        <field name='iface_default_partner_id' />
+                    </div>
+                    <hr />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='fpi.pos_fiscal_printer_button' model='ir.ui.view'>
+            <field name='name'>fpi.pos_fiscal.printer.button</field>
+            <field name='model'>pos.order</field>
+            <field name='inherit_id' ref='point_of_sale.view_pos_pos_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//button[@name='refund']" position='after'>
+                    <field name='state' invisible="1"/>
+                    <field name='document_print_status' invisible="1"/>
+                    <field name='pos_order_type' invisible="1"/>
+                    <field name='fiscal_printer_allowed' invisible="1"/>
+                    <button
+                        string='Imprimir en Impresora fiscal'
+                        attrs="{'invisible':['|', ('state', '=', 'draft'), ('fiscal_printer_allowed', '=', True)]}"
+                        type='object'
+                        name='send_fiscal_printer_action'
+                        class="fpi-printer-button"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="fpi.pos_fiscal_printer_message" model="ir.ui.view">
+            <field name='name'>fpi.pos_fiscal.printer.message</field>
+            <field name='model'>pos.order</field>
+            <field name='inherit_id' ref='point_of_sale.view_pos_pos_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//group[@name='order_fields']" position='before'>
+                    <field name='document_print_status' invisible="1"/>
+                    <div class="alert alert-success fpi-printer-message" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('document_print_status', '!=', 'pending')]}">
+                        La factura ha sido enviada a la impresora fiscal.
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="fpi.pos_fiscal_printer_account_invoices_tree" model="ir.ui.view">
+            <field name='name'>fpi.pos_fiscal.printer.account.invoice.tree</field>
+            <field name='model'>pos.order</field>
+            <field name='inherit_id' ref='point_of_sale.view_pos_order_tree'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='name']" position='after'>
+                    <field name='document_fiscal_invoice_number'/>
+                </xpath>
+            </field>
+        </record>
+        <record id="fpi.pos_fiscal_printer_account_invoices_form" model="ir.ui.view">
+            <field name='name'>fpi.pos_fiscal.printer.account.invoice.form</field>
+            <field name='model'>pos.order</field>
+            <field name='inherit_id' ref='point_of_sale.view_pos_pos_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//group[@name='order_fields']" position='before'>
+                    <group col="4" colspan="4" name="fpi_pos_fields">
+                        <field name='document_fiscal_invoice_number' string="Número de Factura Fiscal" readonly="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id='fpi.document_orders_tree' model='ir.ui.view'>
+            <field name='name'>fpi.document.orders.tree</field>
+            <field name='model'>fpi.document</field>
+            <field name='arch' type='xml'>
+                <tree create="false" edit="false">
+                    <field name="print_status"/>
+                    <field name="number" string="Documento Nro."/>
+                    <field name="invoice_type" string="Tipo de Factura"/>
+                    <field name="serial"/>
+                    <field name="write_date" string="Impreso el dia" />
+                    <field name="write_uid" string="Solicitado por" />
+                </tree>
+            </field>
+        </record>
+        <record id='fpi.document_orders_form' model='ir.ui.view'>
+            <field name='name'>fpi.document.orders.form</field>
+            <field name='model'>fpi.document</field>
+            <field name='arch' type='xml'>
+                <form edit="false" create="false">
+                    <header>
+                        <h1>Documento Nro.: <field name="number"/></h1>
+                    </header>
+                    <sheet>
+                        <group>
+                            <p><strong>Tipo de Documento: </strong><field name="documents_type_printed"/></p>
+                            <p><strong>Tipo de Factura: </strong><field name="invoice_type"/></p>
+                            <p><strong>Enviado a impresión el: </strong><field name="write_date"/></p>
+                            <p><strong>Usuario: </strong><field name="write_uid"/></p>
+                            <p><strong>Estatus de impresión: </strong><field name="print_status"/></p>
+                            <p><strong>Impresora usada: </strong><field name="serial"/></p>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='fpi.document_orders_search' model='ir.ui.view'>
+            <field name='name'>fpi.document.orders.search</field>
+            <field name='model'>fpi.document</field>
+            <field name='arch' type='xml'>
+                <search>
+                    <field name='documents_type_printed'/>
+                    <field name='invoice_type'/>
+                    <field name='serial'/>
+                    <field name='print_status'/>
+                    <field name='write_uid'/>
+                    <field name='number'/>
+                </search>
+            </field>
+        </record>
+        <record
+            id='fpi.document_orders_window' model='ir.actions.act_window'>
+            <field name='name'>Ordenes de Pedido y N/C</field>
+            <field name='res_model'>fpi.document</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>tree,search,form</field>
+            <field name='view_id' ref='fpi.document_orders_tree'/>
+            <field name='domain'>[('print_status','=',['pending', 'in_progress', 'failed']), ('write_uid', '=', uid), ('documents_type_printed', '=', 'pos_order')]</field>
+        </record>
+        <menuitem
+            id='fpi.document_orders_list_root_menu'
+            name='Ordenes de Pedido y N/C'
+            action='fpi.document_orders_window'
+            parent='fpi.menu_fpi_list'
+            sequence="4" />
+    </data>
+</odoo>

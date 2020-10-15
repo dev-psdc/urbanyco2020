@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="psdc_project.google_maps_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/psdc_project/static/src/css/google_maps.css"/>
+            <script type="text/javascript" src="/psdc_project/static/src/js/google_maps.js"></script>
+        </xpath>
+    </template>
+    <template id="psdc_project.layout_map" name="google_maps_layout_psdc_project" inherit_id="web.layout">
+        <xpath expr="//script" position="before">
+            <script t-attf-src="//maps.google.com/maps/api/js?key=#{google_maps_api_key}"></script>
+        </xpath>
+    </template>
+</odoo>

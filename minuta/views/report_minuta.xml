@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<odoo>
+<data>
+    <record model="report.paperformat" id="paperformat_minuta_recap_report">
+        <field name="name">paperformat.minuta.recap.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="recap_report"
+            model="calendar.event"
+            string="Minuta"
+            report_type="qweb-pdf"
+            name="minuta.minuta_recap_report_view"
+            paperformat="paperformat_minuta_recap_report"
+            menu="False"/>
+
+    <template id="minuta_recap_report_view">
+        <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <br/>
+            <br/>
+            <div class="page">
+                <table class="table table-condensed">
+                    <thead align="cender">
+                        <tr>
+                            <th width="30%">
+                                <strong>
+                                    INFORMACIÓN GENERAL
+                                </strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>
+                                    PROYECTO
+                                </strong>
+                            </td>
+                            <td>
+                                <span t-esc="project_id"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-condensed" width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="60%">
+                                <strong>Moderador: </strong><span t-esc="name_mod"/> 
+                            </td>
+                            <td width="40%">
+                                <strong>Lugar: </strong><span t-esc="location"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="60%">
+                                <strong>Horario: </strong><span t-esc="display_time"/>
+                            </td>
+                            <td width="40%">
+                                <strong>Sesión Anterior: </strong><span t-esc="after_sec"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <p style="font-style: italic;">El siguiente escrito es un resumen de lo conversado y las decisiones realizada en la reunión, con la fecha antes mencionada.</p>
+                <br/>
+                <table class="table table-condensed">
+                    <thead align="cender">
+                        <tr>
+                            <th>
+                                <strong>
+                                    OBJETIVOS
+                                </strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span t-esc="objects"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table name="invitados" class="table table-condensed" width="100%">
+                    <thead align="cender">
+                        <tr>
+                            <th>
+                                <strong>
+                                    PARTICIPANTES
+                                </strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="25%">
+                                <strong>
+                                    Nombre y Apellido
+                                </strong>
+                            </td>
+                            <td width="25%">
+                                <strong>
+                                    Cargo
+                                </strong>
+                            </td>
+                            <td width="40%">
+                                <strong>
+                                    Email
+                                </strong>
+                            </td>
+                            <td width="10%">
+                                <strong>
+                                    COD.
+                                </strong>
+                            </td>
+                        </tr>
+                        <t t-foreach="docs" t-as="doc">
+                            <tr>
+                                <td>
+                                    <span t-esc="doc['name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc['resident']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc['email']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc['cod']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <table class="table table-condensed">
+                    <thead align="cender">
+                        <tr>
+                            <th>
+                                <strong>
+                                    TEMAS A TRATAR
+                                </strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span t-esc="theme_t"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-condensed">
+                    <thead align="cender">
+                        <tr>
+                            <th>
+                                <strong>
+                                    NOTAS
+                                </strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span t-esc="notes_m"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-condensed">
+                    <thead align="cender">
+                        <tr>
+                            <th>
+                                <strong>
+                                    TEMAS PENDIENTES
+                                </strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span t-esc="theme_pen"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>
+                                Proxima Reunión: <span t-esc="prox_reu"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            <p>NOTA IMPORTANTE:</p>
+            <p style="text-align: justify; text-justify: inter-word;">
+            Este documento es un resumen de la reunión y está sometido a revisión de los participantes. Cualquier comentario o discrepancia
+            a la minuta, por favor de cometarla para añadirlo. De no tener respuestas o comentarios a los tres (3) días después de emitida
+            esta minuta, se dará como oficial de la reunión.</p>
+            <br/>
+            <p style="text-align: center;">FIN DE LA REUNIÓN</p>
+            <div class="footer">
+                <div class="row text-center" style="border-top: 1px solid black;">
+                    <div class="col-xs-3 col-xs-offset-9 text-right">
+                        <ul class="list-inline" style="margin-top:10px;">
+                            <li>Page:</li>
+                            <li>
+                                <span class="page"/>
+                            </li>
+                            <li>/</li>
+                            <li>
+                                <span class="topage"/>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </t>
+        </t>
+    </template>
+</data>
+</odoo>

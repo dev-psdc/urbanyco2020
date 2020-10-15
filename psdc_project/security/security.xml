@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="addendums_manager" model="res.groups">
+            <field name="name">Gestionar Adendas en proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="resident_role_manager" model="res.groups">
+            <field name="name">Gestionar Puestos de trabajo en residentes</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="bails_manager" model="res.groups">
+            <field name="name">Gestionar Fianzas y Endosos en proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="policies_manager" model="res.groups">
+            <field name="name">Gestionar Pólizas en proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="plannings_manager" model="res.groups">
+            <field name="name">Gestionar Planificaciones, Subproyectos en proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="task_histories_manager" model="res.groups">
+            <field name="name">Gestionar Historial de tareas en proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="rest_api_user" model="res.groups">
+            <field name="name">Permitir consumir servicios Rest</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+    </data>
+</odoo>

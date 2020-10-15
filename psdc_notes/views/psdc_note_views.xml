@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_notes.note_form' model='ir.ui.view'>
+            <field name='name'>psdc_notes.note.form</field>
+            <field name='model'>psdc_notes.note</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <header>
+                        <field name="id_company" readonly="1" invisible="1"/>  
+                        <button name="action_validate" string="CONFIRMAR" type="object" states="draft" class="btn-primary" groups="psdc_notes.psdc_notes_validate_notes_user" />
+                        <button name="action_print" string="IMPRIMIR" type="object" states="validated,sent" class="btn-primary" groups="psdc_notes.psdc_notes_print_notes_user" />
+                        <button name="action_send" string="ENVIAR POR CORREO ELECTRÓNICO" type="object" states="validated,print" class="btn-primary" groups="psdc_notes.psdc_notes_send_notes_user" />
+                        <button name="action_cancel" string="CANCELAR" type="object" states="validated,print,sent" groups="psdc_notes.psdc_notes_cancel_notes_user" />
+                        <button name="action_draft" string="CONVERTIR EN BORRADOR" type="object" states="canceled" groups="psdc_notes.psdc_notes_cancel_notes_user" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,validated,print,sent,canceled" />
+                    </header>
+                    <sheet>
+                        <div>
+                            <h1 class="mt0">
+                                <field name="number" readonly="1" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group name="header_info">
+                            <group>
+                                <field name='name'/>
+                                <field name='date'/>
+                                <field name='client_id' options="{ 'no_create': True, 'no_open': True }" required="1"/>
+                                <field name="project_id" widget="selection" options="{ 'no_create': True, 'no_open': True }"/>
+                                <field name="crm_id" widget="selection" options="{ 'no_create': True, 'no_open': True }"/>
+                            </group>
+                        </group>
+                        <group name="document_info">
+                            <field name='body' widget="html" required="1" />
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_notes.note_tree' model='ir.ui.view'>
+            <field name='name'>psdc_notes.note.tree</field>
+            <field name='model'>psdc_notes.note</field>
+            <field name='arch' type='xml'>
+                <tree>
+                    <field name="id_company" invisible="1"/>
+                    <field name="number"/>   
+                    <field name="name"/>
+                    <field name="client_id"/>
+                    <field name="write_uid"/>
+                    <field name='write_date'/>
+                </tree>
+            </field>
+        </record>
+        <record
+            id='psdc_notes.note_search' model='ir.ui.view'>
+            <field name='name'>psdc_notes.note.search</field>
+            <field name='model'>psdc_notes.note</field>
+            <field name='arch' type='xml'>
+                <search>
+                    <field name="id_company" invisible="1"/>
+                    <field name="number"/> 
+                    <field name="name"/>
+                    <field name="client_id"/>
+                    <field name="write_uid"/>
+                    <field name='write_date'/>
+                </search>
+            </field>
+        </record>
+        <record
+            id="psdc_notes.note_permissions_form" model="ir.ui.view">
+            <field name='name'>psdc_notes.note.permissions.form</field>
+            <field name='model'>psdc_notes.note</field>
+            <field name='inherit_id' ref="psdc_notes.note_form" />
+            <field name='groups_id' eval="[(4,ref('psdc_notes.psdc_notes_user')),]" />
+            <field name="arch" type="xml">
+                <xpath expr="/form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                    <attribute name="delete">false</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record
+            id="psdc_notes.note_permissions_tree" model="ir.ui.view">
+            <field name='name'>psdc_notes.note.permissions.tree</field>
+            <field name='model'>psdc_notes.note</field>
+            <field name='inherit_id' ref="psdc_notes.note_tree" />
+            <field name='groups_id' eval="[(4,ref('psdc_notes.psdc_notes_user')),]" />
+            <field name="arch" type="xml">
+                <xpath expr="/tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="delete">false</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record
+            id='psdc_notes.note_window' model='ir.actions.act_window'>
+            <field name='name'>Notas</field>
+            <field name='res_model'>psdc_notes.note</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>tree,form,search</field>
+        </record>
+        <menuitem
+            id="psdc_notes.root_menu"
+            name="Notas"
+            groups="psdc_notes_manager,psdc_notes_user"
+            web_icon="psdc_notes,static/description/icon.png"
+            sequence="31" />
+        <menuitem
+            id='psdc_notes.root_notes_list'
+            name='Notas'
+            parent='psdc_notes.root_menu'
+            sequence="0" />
+        <menuitem
+            id='psdc_notes.notes_list'
+            name='Lista de Notas'
+            parent='psdc_notes.root_notes_list'
+            sequence="0"
+            action='psdc_notes.note_window' />
+    </data>
+</odoo>

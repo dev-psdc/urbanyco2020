@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='neonety_crm_substage.crm_stubstage_form' model='ir.ui.view'>
+            <field name='name'>crm.substage.form</field>
+            <field name='model'>crm.substage</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <field name='crm_stage_id' options="{ 'no_create': True, 'no_open': True }" required="1" />
+                            <field name='name' required="1"/>
+                            <field name='sequence'/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='neonety_crm_substage.crm_stubstage_tree' model='ir.ui.view'>
+            <field name='name'>crm.substage.tree</field>
+            <field name='model'>crm.substage</field>
+            <field name='arch' type='xml'>
+                <tree>
+                    <field name='crm_stage_id'/>
+                    <field name='name'/>
+                    <field name='sequence'/>
+                </tree>
+            </field>
+        </record>
+        <record
+            id='neonety_crm_substage.crm_stubstage_search' model='ir.ui.view'>
+            <field name='name'>crm.substage.search</field>
+            <field name='model'>crm.substage</field>
+            <field name='arch' type='xml'>
+                <search>
+                    <field name='crm_stage_id'/>
+                    <field name='name'/>
+                    <field name='sequence'/>
+                </search>
+            </field>
+        </record>
+        <record
+            id='neonety_crm_substage.crm_substage_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Sub Etapas</field>
+            <field name='res_model'>crm.substage</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>tree,form,search</field>
+        </record>
+        <menuitem
+            id='neonety_crm_substage.crm_substage_menu_root'
+            name='Sub Etapas'
+            parent='crm.menu_crm_config_lead'
+            sequence="10"
+            action='neonety_crm_substage.crm_substage_window'
+            groups="base.group_no_one"
+            />
+    </data>
+</odoo>

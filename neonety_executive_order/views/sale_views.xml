@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='neonety_executive_order.sale_order_form' model='ir.ui.view'>
+            <field name='name'>neonety.executive.order.sale.order.form</field>
+            <field name='model'>sale.order</field>
+            <field name='inherit_id' ref='sale.view_order_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//notebook" position='inside'>
+                    <page string="Presupuesto Ejecutivo">
+                        <field name="executive_order" widget="html" string="Contenido" />
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="neonety_executive_order.print_button" model="ir.ui.view">
+            <field name='name'>neonety.executive.order.print.button</field>
+            <field name='model'>sale.order</field>
+            <field name='inherit_id' ref='sale.view_order_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//button[@name='print_quotation']" position='after'>
+                    <button name="print_executive_order" string="Imprimir Presupuesto Ejecutivo" type="object" states="draft,sale,sent" class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

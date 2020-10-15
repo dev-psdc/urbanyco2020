@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_substages_manager,crm.substage.group.manager,model_crm_substage,sales_team.group_sale_manager,1,1,1,1
+access_crm_substages_user,crm.substage.group.user,model_crm_substage,,1,0,0,0

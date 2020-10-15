@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_project.subproject_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.subproject.form</field>
+            <field name='model'>psdc_project.subproject</field>
+            <field name='arch' type='xml'>
+                <form string="Sub proyecto">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Descripción"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.subproject_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Subproyectos</field>
+            <field name='res_model'>psdc_project.subproject</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+    </data>
+</odoo>

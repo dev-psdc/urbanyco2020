@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <!-- <record id='create_delivery.view_order_form' model='ir.ui.view'>
+            <field name='name'>create.delivery.view.order.form</field>
+            <field name='model'>sale.order</field>
+            <field name='inherit_id' ref='ancon.sale_order_state_buttons_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//button[@name='action_confirm']" position="replace">
+                    <button name="n_action_confirm" id="n_action_confirm"
+                        string="Confirmar Venta" class="btn-primary" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['sent'])]}" invisible="1"/>
+                    <button name="n_action_confirm"
+                        string="Confirmar Venta" type="object"
+                        attrs="{'invisible': [('state', 'not in', ['draft'])]}" invisible="1"/>
+                    <button name="run_action_launch_procurement" id="run_action_launch_procurement"
+                        string="Crear Pedido" type="object"
+                        attrs="{'invisible':[['invoice_status','!=','to invoice']]}"/>
+                </xpath>
+            </field>
+        </record> -->
+        <record id='create_delivery.view_account_payment_form' model='ir.ui.view'>
+            <field name='name'>create.delivery.view.account.payment.form</field>
+            <field name='model'>account.payment</field>
+            <field name='inherit_id' ref='account.view_account_payment_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='partner_id']" position='after'>
+                    <field name="check_name" readonly='False' invisible="1"/>
+                    <field name="name_c" attrs="{'invisible': [('state', '=', 'draft')], 'readonly': [('state', '!=', 'posted')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

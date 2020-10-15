@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_project.planning_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.planning.form</field>
+            <field name='model'>psdc_project.planning</field>
+            <field name='arch' type='xml'>
+                <form string="Planificación del proyecto">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="state" string="Estado" widget="selection"/>
+                                <field name="start_on" string="Fecha inicial"/>
+                                <field name="end_on" string="Fecha final"/>
+                                <field name="responsible_id" string="Asignado a"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="id" invisible="1" />
+                            <field name="project_id" invisible="1" />
+                            <field name="task_ids" context="{'planning_id': id}">
+                                <tree name="task_ids_container">
+                                    <field name="name" />
+                                    <field name="project_id" />
+                                    <field name="subproject_id" />
+                                    <field name="user_id" />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.planning_tree'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.planning.tree</field>
+            <field name='model'>psdc_project.planning</field>
+            <field name='arch' type='xml'>
+                <tree name="project_plannings">
+                    <field name="state" string="Estado"/>
+                    <field name="start_on" string="Fecha inicial"/>
+                    <field name="end_on" string="Fecha final"/>
+                    <field name="responsible_id" string="Asignado a"/>
+                </tree>
+            </field>
+        </record>
+        <record
+            id='psdc_project.planning_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Planificaciones del proyecto</field>
+            <field name='res_model'>psdc_project.planning</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>tree,form</field>
+            <field name="context">{'search_default_project_id': [active_id], 'default_project_id': active_id}</field>
+            <field name="domain">[('project_id', '=', active_id)]</field>
+        </record>
+    </data>
+</odoo>

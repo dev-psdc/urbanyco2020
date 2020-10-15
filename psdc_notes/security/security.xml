@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="psdc_notes_manager" model="res.groups">
+            <field name="name">Crear / Editar / Borrar Notas a Proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="psdc_notes_validate_notes_user" model="res.groups">
+            <field name="name">Confirmar Notas de Proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="psdc_notes_cancel_notes_user" model="res.groups">
+            <field name="name">Cancelar Notas de Proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="psdc_notes_print_notes_user" model="res.groups">
+            <field name="name">Imprimir Notas de Proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="psdc_notes_send_notes_user" model="res.groups">
+            <field name="name">Envíar Notas de Proyectos por Correo Electrónico</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="psdc_notes_user" model="res.groups">
+            <field name="name">Usar Módulo de Notas de Proyectos</field>
+            <field name="category_id" ref="base.module_category_project_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+    </data>
+</odoo>

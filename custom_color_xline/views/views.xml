@@ -1,0 +1,52 @@
+<odoo>
+  <data>
+    <template id="custom_color_xline.custom_external_xline" inherit_id="web.external_layout_background">
+      <xpath expr="//t[@t-name='web.external_layout_background']" position="replace">
+        <t t-name="web.external_layout_background">
+            <div class="header o_background_header_2">
+                <div class="pull-right">
+                    <h3 class="mt0 text-right" t-field="company.report_header"/>
+                </div>
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 75px;" class="pull-left"/>
+                <!-- <span>RUC: 572502-1-446862 DV 86</span>!-->
+                <div class="pull-left company_address">
+                    <!-- <div>
+                        <strong t-field="company.partner_id.name"/>
+                    </div>
+                    <span t-field="company.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true> -->
+                    
+                </div>
+                <div class="clearfix mb8"/>
+            </div>
+
+            <div class="article o_report_layout_backgrounds_2">
+                <t t-raw="0"/>
+            </div>
+            <div class="footer o_background_footer_2">
+                <div class="text-center">
+                    <ul class="list-inline">
+                        <li t-if="company.phone"><i class="fa fa-phone"/> <span t-field="company.phone"/></li>
+                        <li t-if="company.email"><i class="fa fa-at"/> <span t-field="company.email"/></li>
+                        <li t-if="company.website"><i class="fa fa-globe"/> <span t-field="company.website"/></li>
+                        <li t-if="company.vat"><i class="fa fa-building-o"/><t t-esc="company.country_id.vat_label or 'RUC'"/>: <span t-field="company.vat"/></li>
+                    </ul>
+                    <div t-field="company.report_footer"/>
+                    <div class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        of
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+      </xpath>
+    </template>
+
+    <template id="assets_backend" name="custom_color_xline assets" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/custom_color_xline/static/src/css/customxline.scss"/>
+        </xpath>
+    </template>
+  </data>
+</odoo>

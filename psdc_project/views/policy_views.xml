@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_project.policy_type_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.policy.type.form</field>
+            <field name='model'>psdc_project.policy_type</field>
+            <field name='arch' type='xml'>
+                <form string="Nuevo tipo de Póliza">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Descripción"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.policy_type_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Tipos de Pólizas</field>
+            <field name='res_model'>psdc_project.policy_type</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+        <record
+            id='psdc_project.policy_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.policy.form</field>
+            <field name='model'>psdc_project.policy</field>
+            <field name='arch' type='xml'>
+                <form string="Nueva Póliza">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number" string="N de Póliza"/>
+                                <field name="policy_type_id" string="Tipo de Póliza"/>
+                                <field name="insurer_id" string="Aseguradora"/>
+                            </group>
+                            <group>
+                                <field name="issue_date" string="Fecha Emisión"/>
+                                <field name="expired_at" string="Fecha Vencimiento"/>
+                                <field name="is_renovation" string="Es renovación"/>
+                            </group>
+                        </group>
+                        <group groups="psdc_project.bails_manager">
+                            <field name="endorsement_ids" string=" Endoso">
+                                <tree name="endorsement_container">
+                                    <field name="number" string="N de Endoso"/>
+                                    <field name="endorsement_reason_id" string="Motivo del Endoso"/>
+                                    <field name="observation" string="Observación"/> 
+                                    <field name="endorsement_file" string="Archivo"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="policy_file" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.policy_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Pólizas</field>
+            <field name='res_model'>psdc_project.policy</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+    </data>
+</odoo>

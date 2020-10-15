@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="psdc_notes.note_report_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context({'lang':doc.client_id.lang})" />
+            <div class="page">
+                <div class="oe_structure"/>
+                <div class="clearfix">
+                <div align="right" style="font-weight:bold">
+                      <span t-raw="doc.crm_id.name"/>
+                      <span t-raw="doc.project_id.name"/>
+                    </div>
+                    <div align="right">
+                      <t t-if="doc.project_id.x_studio_field_AyqX6"><strong>[<span t-raw="doc.project_id.x_studio_field_AyqX6"/>]</strong></t>
+                    </div>
+                    <br></br>
+                    <div class="col-xs-12" align="right" style="font-weight:bold">
+                        <span t-raw="doc.number"/>
+                    </div> 
+                    <div class="col-xs-12">
+                        <span t-raw="doc.body"/>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+    <template id="psdc_notes.note_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="psdc_notes.note_report_document" t-lang="doc.client_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

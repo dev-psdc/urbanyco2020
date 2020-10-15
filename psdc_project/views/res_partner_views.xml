@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='psdc_project.projects_page_res_partner_form' model='ir.ui.view'>
+            <field name='name'>psdc.project.projects.page.res.partner.form</field>
+            <field name='model'>res.partner</field>
+            <field name='inherit_id' ref='base.view_partner_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/notebook/page[@name='sales_purchases']" position='after'>
+                    <page name="project" string="Proyecto">
+                        <group name="project_main_container">
+                            <group name="project_fields_container">
+                                <field name="is_resident" string="Residente"/>
+                                <field name="is_insurer" string="Aseguradora"/>
+                                <field name="identity_number" string="N de Idoneidad" attrs="{'required': [('is_resident', '=', True)]}" />
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.resident_role_field_res_partner_form' model='ir.ui.view'>
+            <field name='name'>psdc.project.resident.role.field.res.partner.form</field>
+            <field name='model'>res.partner</field>
+            <field name='inherit_id' ref='base.view_partner_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='function']" position='replace'>
+                    <field name="resident_role_id" string="Puesto de Trabajo"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

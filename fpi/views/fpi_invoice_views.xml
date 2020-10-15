@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Boton de imprimir que aparece en el modulo de contabilidad, en las facuras -->
+        <record id='fpi.fiscal_printer_button' model='ir.ui.view'>
+            <field name='name'>fpi.fiscal.printer.button</field>
+            <field name='model'>account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='state']" position='before'>
+                    <field name='state' invisible="1"/>
+                    <field name='document_print_status' invisible="1"/>
+                    <button
+                        string='Imprimir en Impresora fiscal'
+                        attrs="{'invisible':[('state', '==', 'draft'), ('document_print_status', '!=', 'pending')]}"
+                        type='object'
+                        name='send_fiscal_printer_action'
+                        class="fpi-printer-button"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Mensaje para avisar si se ha enviado la factura al modulo de fpi -->
+        <record id="fpi.fiscal_printer_message" model="ir.ui.view">
+            <field name='name'>fpi.fiscal.printer.message</field>
+            <field name='model'>account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//div[@role='alert']" position='before'>
+                    <field name='document_print_status' invisible="1"/>
+                    <div class="alert alert-success fpi-printer-message" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('document_print_status', '!=', 'pending')]}">
+                        La factura ha sido enviada a la impresora fiscal.
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Agrega el campo de numero de factura fiscal al modulo de contabilidad  -->
+        <record id="fpi.fiscal_printer_account_invoices_tree" model="ir.ui.view">
+            <field name='name'>fpi.fiscal.printer.account.invoice.tree</field>
+            <field name='model'>account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_tree'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='number']" position='after'>
+                    <field name='document_fiscal_invoice_number'/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Agrega el campo de numero de factura fiscal al form de la factura -->
+        <record id="fpi.fiscal_printer_account_invoices_form" model="ir.ui.view">
+            <field name='name'>fpi.fiscal.printer.account.invoice.form</field>
+            <field name='model'>account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//h1[@class='mt0']" position='after'>
+                    <h2 class="mt0" attrs="{'invisible': [('document_fiscal_invoice_number', '==', 0)]}">
+                        <label string="Número de Factura Fiscal"/>
+                        <field name='document_fiscal_invoice_number' readonly="1" class="oe_inline"/>
+                    </h2>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

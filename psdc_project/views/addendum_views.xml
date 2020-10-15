@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_project.addendum_description_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.addendum.description.form</field>
+            <field name='model'>psdc_project.addendum_description</field>
+            <field name='arch' type='xml'>
+                <form string="Nueva Adenda">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" string="Descripción"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.addendum_description_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Descripción de Adendas</field>
+            <field name='res_model'>psdc_project.addendum_description</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+        <record
+            id='psdc_project.addendum_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.addendum.form</field>
+            <field name='model'>psdc_project.addendum</field>
+            <field name='arch' type='xml'>
+                <form string="Nueva Adenda">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number" string="N de Adenda"/>
+                                <field name="addendum_description_id" string="Descripción"/>
+                                <field name="comments" string="Comentarios"/>
+                            </group>
+                            <group>
+                                <field name="addendum_date" string="Fecha por Adenda"/>
+                            </group>
+                            <group>
+                                <field name="addendum_file" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.addendum_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Adendas</field>
+            <field name='res_model'>psdc_project.addendum</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+    </data>
+</odoo>

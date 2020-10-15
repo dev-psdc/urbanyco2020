@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model='psdc_project.addendum_description'   id='psdc_project.addendum_description1'>
+            <field name='name'>Aumento de tiempo</field>
+        </record>
+        <record model='psdc_project.addendum_description'   id='psdc_project.addendum_description2'>
+            <field name='name'>Aumento de tarea</field>
+        </record>
+    </data>
+</odoo>

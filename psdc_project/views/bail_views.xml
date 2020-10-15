@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record
+            id='psdc_project.bail_form'
+            model='ir.ui.view'>
+            <field name='name'>psdc.project.bail.form</field>
+            <field name='model'>psdc_project.bail</field>
+            <field name='arch' type='xml'>
+                <form string="Nueva Adenda">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="number" string="N de Fianza"/>
+                                <field name="insurer_id" string="Aseguradora"/>
+                            </group>
+                            <group>
+                                <field name="issue_date" string="Fecha Emisión"/>
+                                <field name="expired_at" string="Fecha Vencimiento"/>
+                            </group>
+                        </group>
+                        <group groups="psdc_project.bails_manager">
+                            <field name="endorsement_ids" string=" Endoso">
+                                <tree name="endorsement_container">
+                                    <field name="number" string="N de Endoso"/>
+                                    <field name="endorsement_reason_id" string="Motivo del Endoso"/>
+                                    <field name="observation" string="Observación"/> 
+                                    <field name="endorsement_file" string="Archivo"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="bail_file" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='psdc_project.bail_window'
+            model='ir.actions.act_window'>
+            <field name='name'>Fianzas</field>
+            <field name='res_model'>psdc_project.bail</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>form</field>
+        </record>
+    </data>
+</odoo>

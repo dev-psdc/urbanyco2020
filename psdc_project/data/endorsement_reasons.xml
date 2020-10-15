@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model='psdc_project.endorsement_reason'   id='psdc_project.endorsement_reason1'>
+            <field name='reason'>Aumento de Valor</field>
+        </record>
+        <record model='psdc_project.endorsement_reason'   id='psdc_project.endorsement_reason2'>
+            <field name='reason'>Correcciones</field>
+        </record>
+        <record model='psdc_project.endorsement_reason'   id='psdc_project.endorsement_reason3'>
+            <field name='reason'>Valor del contrato</field>
+        </record>
+    </data>
+</odoo>

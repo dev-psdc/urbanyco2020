@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="minuta.view_calendar_event_calendar" model="ir.ui.view">
+      <field name='name'>minuta.view.calendar.event.form</field>
+      <field name='model'>calendar.event</field>
+      <field name='inherit_id' ref='calendar.view_calendar_event_form'/>
+      <field name='arch' type='xml'>
+        <xpath expr="/form/sheet/notebook/page[@name='page_misc']" position='after'>
+            <page name="page_minuta" string="Minuta">
+              <form string="Información General">
+                <group>
+                  <field name="name_mod"/>
+
+                  <field name="after_sec"/>
+
+                  <field name="objects"/>
+
+                  <field name="theme_t"/>
+
+                  <field name="notes_m"/>
+
+                  <field name="theme_pen"/>
+                
+                  <field name="prox_reu"/>
+                </group>
+                <button name="get_report" string="Generar Reporte" type="object" class="oe_highlight"/>
+              </form>
+            </page>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="minuta.view_calendar_event_project" model="ir.ui.view">
+      <field name='name'>minuta.view.calendar.event.project</field>
+      <field name='model'>calendar.event</field>
+      <field name='inherit_id' ref='calendar.view_calendar_event_form'/>
+      <field name='arch' type='xml'>
+        <xpath expr="//field[@name='location']" position='after'>
+          <field name="project_id"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='psdc_project.resident_field_edit_project' model='ir.ui.view'>
+            <field name='name'>psdc.project.resident.field.edit.project</field>
+            <field name='model'>project.project</field>
+            <field name='inherit_id' ref='project.edit_project'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/notebook/page/group/field[@name='user_id']" position='after'>
+                    <field name="date_start" string="Fecha de Inicio"/>
+                    <field name="date_end" string="Fecha Final"/>
+                    <field name="no_contra" string="No. Contrato"/>
+                    <field name="resident_id" string="Residente del proyecto" required="1"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/group/field[@name='resident_id']" position='after'>
+                    <field name="inspector_name" string="Inspector del proyecto"/>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.addendum_page_edit_project' model='ir.ui.view'>
+            <field name='name'>psdc.project.addendum.page.edit.project</field>
+            <field name='model'>project.project</field>
+            <field name='inherit_id' ref='project.edit_project'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/notebook/page[@name='emails']" position='after'>
+                    <page name="addendum" string="Adenda" groups="psdc_project.addendums_manager">
+                        <field name="addendum_ids" string=" Adenda">
+                            <tree string="Adendas" name="addendums">
+                                <field name="number" string="N de Adenda"/>
+                                <field name="addendum_description_id" string="Descripción"/>
+                                <field name="comments" string="Comentarios"/>
+                                <field name="addendum_file" string="Archivo"/>
+                                <field name="addendum_date" string="Fecha por Adenda"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="bail" string="Fianza" groups="psdc_project.bails_manager">
+                        <field name="bail_ids" string=" Fianza">
+                            <tree name="bails">
+                                <field name="number" string="N de Fianza"/>
+                                <field name="insurer_id" string="Aseguradora"/>
+                                <field name="issue_date" string="Fecha Emisión"/>
+                                <field name="expired_at" string="Fecha Vencimiento"/>
+                                <field name="bail_file" string="Archivo"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="policy" string="Póliza" groups="psdc_project.policies_manager">
+                        <field name="policy_ids" string=" Póliza">
+                            <tree name="policies">
+                                <field name="number" string="N de Póliza"/>
+                                <field name="policy_type_id" string="Tipo de Póliza"/>
+                                <field name="insurer_id" string="Aseguradora"/>
+                                <field name="issue_date" string="Fecha Emisión"/>
+                                <field name="expired_at" string="Fecha Vencimiento"/>
+                                <field name="is_renovation" string="Es renovación"/>
+                                <field name="policy_file" string="Archivo"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.task_histories_view_task_form' model='ir.ui.view'>
+            <field name='name'>psdc.project.task.histories.view.task.form</field>
+            <field name='model'>project.task</field>
+            <field name='inherit_id' ref='project.view_task_form2'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/notebook/page[@name='extra_info']" position='after'>
+                    <page name="histories" string="Historial">
+                        <field name="task_history_ids" string=" Historial">
+                            <tree name="histories_tree_view" create="false" edit="false" delete="false">
+                                <field name="state" string="Estado" readonly="1"/>
+                                <field name="date" readonly="1"/>
+                                <field name="time" readonly="1"/>
+                                <field name="comments" string="Observaciones" readonly="1"/>
+                                <field name="task_history_image_ids"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="tracking" string="Seguimiento de Historias (Mapa)">
+                        <field name="task_histories_map" widget="map" />
+                    </page>
+                    <page name="qrcode" string="Código QR">
+                        <group>
+                            <field name="qr_code" widget="image" width="200"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.qrcode_field_edit_project' model='ir.ui.view'>
+            <field name='name'>psdc.project.qrcode.field.edit.project</field>
+            <field name='model'>project.project</field>
+            <field name='inherit_id' ref='project.edit_project'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/notebook/page[@name='emails']" position='after'>
+                    <page name="qrcode" string="Código QR">
+                        <group>
+                            <field name="qr_code" widget="image" width="200"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.planning_section_edit_project' model='ir.ui.view'>
+            <field name='name'>psdc.project.planning.section.edit.project</field>
+            <field name='model'>project.project</field>
+            <field name='inherit_id' ref='project.edit_project'/>
+            <field name='arch' type='xml'>
+                <xpath expr='/form/sheet/div[@name="button_box"]/button[@name="attachment_tree_view"]' position='before'>
+                    <button class="oe_stat_button" type="action" name="%(psdc_project.planning_window)d" icon="fa-tasks">
+                        <field string="Planificaciones" name="plannings_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.subproject_field_view_task_form' model='ir.ui.view'>
+            <field name='name'>psdc.project.subproject.field.view.task.form</field>
+            <field name='model'>project.task</field>
+            <field name='inherit_id' ref='project.view_task_form2'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/group/group/field[@name='project_id']" position='after'>
+                    <field name="subproject_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record id='psdc_project.progress_field_view_task_form' model='ir.ui.view'>
+            <field name='name'>psdc.project.progress.field.view.task.form</field>
+            <field name='model'>project.task</field>
+            <field name='inherit_id' ref='project.view_task_form2'/>
+            <field name='arch' type='xml'>
+                <xpath expr="/form/sheet/group/group/field[@name='tag_ids']" position='after'>
+                    <field name="progress"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
