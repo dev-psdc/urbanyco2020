@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 import datetime
+from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 import logging
 _logger = logging.getLogger(__name__)
-
 
 SEX_TYPES = [
 	('Masculino',"Masculino"),
@@ -14,7 +14,7 @@ SEX_TYPES = [
 def calculate_age(_birth_date):
 	age = 0
 	current_date = datetime.date.today()
-	birth_date = datetime.datetime.strptime(_birth_date, '%Y-%m-%d').date()
+	birth_date = _birth_date
 	born = relativedelta(current_date,birth_date).years
 	if born > 0:
 		age = born
@@ -24,39 +24,18 @@ def calculate_age(_birth_date):
 class NeonetyCountry(models.Model):
 	_name = 'res.country'
 	_inherit = 'res.country'
-	province_ids = fields.One2many(
-	    'neonety.province',
-	    'country_id',
-	    string='Provincias',
-	    ondelete='cascade'
-	)
+
+	province_ids = fields.One2many('neonety.province', 'country_id', string='Provincias', ondelete='cascade')
+	# = fields.One2many('neonety.region', 'country_id', string='Regiones', ondelete='cascade')
 
 
 class NeonetyProvince(models.Model):
 	_name = 'neonety.province'
-	code = fields.Char(
-		string='Código',
-		size=3,
-		required=True,
-		translate=True)
-	name = fields.Char(
-		string='Nombre',
-		size=255,
-		required=True,
-		translate=True)
-	country_id = fields.Many2one(
-	    'res.country',
-	    string='País',
-	    required=False,
-	    translate=True,
-	    compute='_get_country_id',
-	    store=True,
-	    ondelete='cascade')
-	district_ids = fields.One2many(
-	    'neonety.district',
-	    'province_id',
-	    string='Distritos'
-	)
+
+	code = fields.Char(string='Código', size=3, required=True, translate=True)
+	name = fields.Char(string='Nombre', size=255, required=True, translate=True)
+	country_id = fields.Many2one('res.country', string='País', required=False, translate=True, compute='_get_country_id', store=True, ondelete='cascade')
+	district_ids = fields.One2many('neonety.district', 'province_id', string='Distritos')
 
 	@api.depends('name')
 	def _get_country_id(self):
@@ -67,33 +46,12 @@ class NeonetyProvince(models.Model):
 
 class NeonetyDistrict(models.Model):
 	_name = 'neonety.district'
-	code = fields.Char(
-		string='Código',
-		size=3,
-		required=True,
-		translate=True)
-	name = fields.Char(
-		string='Nombre',
-		size=255,
-		required=True,
-		translate=True)
-	country_id = fields.Many2one(
-	    'res.country',
-	    string='País',
-	    required=False,
-	    translate=True,
-	    compute='_get_country_id',
-	    store=True)
-	province_id = fields.Many2one(
-	    'neonety.province',
-	    string='Distrito',
-	    required=False,
-	    translate=True)
-	sector_ids = fields.One2many(
-	    'neonety.sector',
-	    'district_id',
-	    string='Corregimientos',
-	)
+
+	code = fields.Char(string='Código', size=3, required=True, translate=True)
+	name = fields.Char(string='Nombre', size=255, required=True, translate=True)
+	country_id = fields.Many2one('res.country', string='País', required=False, translate=True, compute='_get_country_id', store=True)
+	province_id = fields.Many2one('neonety.province', string='Provincia', required=False, translate=True)
+	sector_ids = fields.One2many('neonety.sector', 'district_id', string='Corregimientos')
 
 	@api.depends('name')
 	def _get_country_id(self):
@@ -104,33 +62,12 @@ class NeonetyDistrict(models.Model):
 
 class NeonetySector(models.Model):
 	_name = 'neonety.sector'
-	code = fields.Char(
-		string='Código',
-		size=3,
-		required=True,
-		translate=True)
-	name = fields.Char(
-		string='Nombre',
-		size=255,
-		required=True,
-		translate=True)
-	country_id = fields.Many2one(
-	    'res.country',
-	    string='País',
-	    required=False,
-	    translate=True,
-	    compute='_get_country_id',
-	    store=True)
-	province_id = fields.Many2one(
-	    'neonety.province',
-	    string='Distrito',
-	    required=False,
-	    translate=True)
-	district_id = fields.Many2one(
-	    'neonety.district',
-	    string='Distrito',
-	    required=False,
-	    translate=True)
+
+	code = fields.Char(string='Código', size=3, required=True, translate=True)
+	name = fields.Char(string='Nombre', size=255, required=True, translate=True)
+	country_id = fields.Many2one('res.country', string='País', required=False, translate=True, compute='_get_country_id', store=True)
+	province_id = fields.Many2one('neonety.province', string='Provincia', required=False, translate=True)
+	district_id = fields.Many2one('neonety.district', string='Distrito', required=False, translate=True)
 
 	@api.depends('name')
 	def _get_country_id(self):
@@ -138,97 +75,55 @@ class NeonetySector(models.Model):
 		country_id = self.env['res.country'].search([['name', '=', 'Panama']]).id
 		self.country_id = country_id
 
+
 class NeonetyPartnerConcept(models.Model):
 	_name = 'neonety.partner.concept'
-	name = fields.Char(
-	    string='Concepto',
-	    required=True,
-	    translate=True)
-	status = fields.Boolean(
-	    string='Estatus',
-	    required=True,
-	    translate=True)
+
+	name = fields.Char(string='Concepto', required=True, translate=True)
+	status = fields.Boolean(string='Estatus', required=True, translate=True)
+
+
+class NeonetyRegion(models.Model):
+	_name = 'neonety.region'
+
+	code = fields.Char(string='Código', size=3, required=True)
+	name = fields.Char(string='Nombre', size=255, required=True)
+	country_id = fields.Many2one('res.country', string='País', required=False, compute='_get_country_id', store=True, ondelete='cascade')
+	province_id = fields.Many2one('neonety.province', string='Provincia')
 
 
 class NeonetyPartner(models.Model):
 	_name = 'res.partner'
 	_inherit = 'res.partner'
-	ruc = fields.Char(
-	    string='RUC',
-	    size=20,
-	    required=False,
-	    translate=True)
-	dv = fields.Char(
-	    string='DV',
-	    size=2,
-	    required=False,
-	    translate=True)
-	operation_notice_number = fields.Char(
-	    string=' No. Aviso de Operación',
-	    size=50,
-	    required=False,
-	    translate=True)
+
+	@api.depends('name')
+	def _get_country_id(self):
+		country = self.pool.get('res.country')
+		country_id = self.env['res.country'].search([['name', '=', 'Panama']]).id
+		self.country_id = country_id
+
+	ruc = fields.Char(string='RUC', size=20)
+	dv = fields.Char(string='DV', size=2)
+	operation_notice_number = fields.Char(string=' No. Aviso de Operación', size=50)
 	partner_nationality = fields.Selection([
 		('local', 'Local'),
 		('extranjero', 'Extranjero')],
-		string='Nacionalidad del cliente ó proveedor',
-		required=False, translate=True)
+		string='Nacionalidad del cliente ó proveedor')
 	partner_type = fields.Selection([
 		('natural', 'Persona natural (N)'),
 		('juridica', 'Persona jurídica (J)'),
 		('extranjero', 'Extranjero (E)')],
-		string='Tipo de cliente ó proveedor',
-		required=False, translate=True)
-	neonety_partner_concept_id = fields.Many2one(
-	    'neonety.partner.concept',
-	    string='Concepto',
-	    required=False,
-	    translate=True)
-	neonety_country_id = fields.Many2one(
-	    'res.country',
-	    string='País',
-	    required=False,
-	    translate=True,
-	    default=lambda self: self._get_country_id())
-	country_id = fields.Many2one(
-	    'res.country',
-	    string='País',
-	    required=False,
-	    translate=True,
-	    default=lambda self: self._get_country_id())
-	province_id = fields.Many2one(
-	    'neonety.province',
-	    string='Distrito',
-	    required=False,
-	    translate=True)
-	district_id = fields.Many2one(
-	    'neonety.district',
-	    string='Distrito',
-	    required=False,
-	    translate=True)
-	sector_id = fields.Many2one(
-	    'neonety.sector',
-	    string='Corregimiento',
-	    required=False,
-	    translate=True)
-	street = fields.Char(
-	    string='Dirección',
-	    required=False,
-	    translate=True)
-	sex = fields.Selection(
-		SEX_TYPES,
-		string='Sexo',
-		required=False,
-		default=None)
-	birth_date = fields.Date(
-		string='Fecha de Nacimiento',
-		required=False,
-		default=None)
-	age = fields.Char(
-		string='Edad',
-		required=False,
-		compute='_calculate_age',
-		default='0')
+		string='Tipo de cliente ó proveedor')
+	neonety_partner_concept_id = fields.Many2one('neonety.partner.concept', string='Concepto', default=None)
+	neonety_country_id = fields.Many2one('res.country', string='País', default=lambda self: self._get_country_id())
+	country_id = fields.Many2one('res.country', string='País', default=lambda self: self._get_country_id())
+	province_id = fields.Many2one('neonety.province', string='Provincia')
+	district_id = fields.Many2one('neonety.district', string='Distrito')
+	sector_id = fields.Many2one('neonety.sector', string='Corregimiento')
+	street = fields.Char(string='Dirección')
+	sex = fields.Selection(SEX_TYPES, string='Sexo')
+	birth_date = fields.Date(string='Fecha de Nacimiento')
+	age = fields.Char(string='Edad', compute='_calculate_age', default='0')
 
 	@api.depends('birth_date')
 	def _calculate_age(self):
@@ -247,7 +142,6 @@ class NeonetyPartner(models.Model):
 			if born > 0:
 				self.age = '{0} año(s) de edad'.format(born)
 
-	@api.model
 	def _get_country_id(self):
 		self._cr.execute("SELECT id FROM res_country WHERE code LIKE 'PA' LIMIT 1")
 		country_id = self._cr.fetchone()
@@ -293,3 +187,53 @@ class NeonetyPartner(models.Model):
 				ids.append(sector[0])
 			res['domain'] = {'sector_id': [('id', 'in', ids)]}
 		return res
+
+	def _check_fields_required(self, vals):
+		errors = []
+		if 'email' in vals:
+			if vals['email']:
+				import re
+				match = re.match('^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$', vals['email'])
+				if match == None:
+					errors.append('El Email tiene un formato inválido, formado esperado: "example@domain.com"')
+		if len(errors) > 0:
+			raise ValidationError("\n".join(errors))
+
+	def _check_ruc_exists(self, vals, pk=0):
+		if 'ruc' in vals:
+			if vals['ruc']:
+				ruc = vals.get('ruc', False)
+				if ruc:
+					ruc = ruc.replace(' ', '') if '-' in ruc else ruc
+					ruc = ruc.replace(" ", '') if " " in ruc else ruc
+					if pk > 0:
+						counter = self.env['res.partner'].search_count([('ruc', '=', ruc), ('id', '!=', pk)])
+					else:
+						counter = self.env['res.partner'].search_count([('ruc', '=', ruc)])
+					if counter > 0:
+						raise ValidationError('El RUC ya se encuentra registrado en otra cuenta.')
+
+	@api.model
+	def create(self, vals):
+		self._check_ruc_exists(vals=vals)
+		if 'ruc' in vals:
+			ruc = vals.get('ruc', False)
+			if ruc:
+				ruc = ruc.replace(' ', '') if '-' in ruc else ruc
+				ruc = ruc.replace(" ", '') if " " in ruc else ruc
+				vals['ruc'] = ruc
+		partner = super(NeonetyPartner, self).create(vals)
+		self._check_fields_required(vals=vals)
+		return partner
+    
+	def write(self, vals):
+		if 'ruc' in vals:
+			ruc = vals.get('ruc', False)
+			if ruc:
+				ruc = ruc.replace(' ', '') if '-' in ruc else ruc
+				ruc = ruc.replace(" ", '') if " " in ruc else ruc
+				vals['ruc'] = ruc
+		partner = super(NeonetyPartner, self).write(vals)
+		self._check_fields_required(vals=vals)
+		self._check_ruc_exists(vals=vals, pk=self.id)
+		return partner

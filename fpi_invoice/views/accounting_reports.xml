@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_x" model="ir.actions.server">
+            <field name="name">Report X</field>
+            <!-- <field name="condition">True</field> -->
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_fpi_document" />
+            <field name="state">code</field>
+            <field name="code">env['fpi.document'].create({'printer_id': 1, 'printer_user_id':uid, 'doc_type' : 'X', 'parent_invoice_fiscal_printer_serial': env['fpi.printer'].search([('employee_id.id', '=', uid)]).serial, 'number':'REPORTE-X-0001'})</field>
+        </record>
+
+        <record id="action_report_z" model="ir.actions.server">
+            <field name="name">Report Z</field>
+            <!-- <field name="condition">True</field> -->
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_fpi_document" />
+            <field name="state">code</field>
+            <field name="code">env['fpi.document'].create({'printer_id': 1, 'printer_user_id':uid, 'doc_type' : 'Z','parent_invoice_fiscal_printer_serial': env['fpi.printer'].search([('employee_id.id', '=', uid)]).serial, 'number':'REPORTE-Z-0001'})</field>
+        </record> 
+
+        <menuitem
+            id='fpi.menu_reportes_x_z'
+            name='Reportes'
+            parent='account.menu_finance_reports'
+            sequence="3"/>
+        <menuitem
+            id='fpi.menu_reporte_x'
+            name='Reporte X'
+            parent='fpi.menu_reportes_x_z'
+            sequence="0"
+            action='action_report_x' />
+        <menuitem
+            id='fpi.menu_reporte_z'
+            name='Reporte Z'
+            parent='fpi.menu_reportes_x_z'
+            sequence="1"
+            action='action_report_z'/>
+    </data>
+</odoo>

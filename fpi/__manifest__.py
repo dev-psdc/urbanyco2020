@@ -3,17 +3,14 @@
     'name': "Impresoras Fiscales(integración)",
     'summary': "Integración y uso de impresora fiscales.",
     'description': "Integración y uso de impresora fiscales",
-    'author': "PSDC Inc. & Eric Dominguez",
-    'website': "http://www.psdc.com.pa",
+    'author': "Neonety",
+    'website': "http://www.neonety.com",
     'category': 'Administration',
-    'version': '1.0',
-    'depends': ['base', 'neonety', 'account_invoicing', 'account_accountant'],
+    'version': '1.0.0',
+    'depends': ['base', 'neonety'],
     'data': [
         'security/security_data.xml',
         'security/ir.model.access.csv',
-        'views/fpi_invoice_views.xml',
-        'views/fpi_views.xml',
-        'views/fpi_account_journal.xml',
-        'views/accounting_reports.xml',
+        'views/fpi_views.xml'
     ],
 }

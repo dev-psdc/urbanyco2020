@@ -8,7 +8,7 @@
             <field name='model'>fpi.printer</field>
             <field name='arch' type='xml'>
                 <kanban>
-                    <field name='printer_model'/>
+                    <field name='model'/>
                     <templates>
                         <t t-name='kanban-box'>
                             <div t-attf-class="oe_kanban_color_{{ kanban_getcolor(record.model.raw_value) }} 
@@ -27,16 +27,16 @@
                                 </div>
                                 <div t-attf-class='oe_kanban_content'>
                                     <span>Modelo:</span>
-                                    <field name='printer_model'/>
+                                    <field name='model'/>
                                     <br />
                                     <span>Serial:</span>
                                     <field name='serial'/>
                                     <br />
                                     <span>Esta disponible:</span>
-                                    <field name='printer_state'/>
+                                    <field name='is_available'/>
                                     <br />
                                     <span>Asignado a:</span>
-                                    <field name='employee_id'/>
+                                    <field name='employee_id' />
                                 </div>
                             </div>
                         </t>
@@ -51,10 +51,9 @@
             <field name='model'>fpi.printer</field>
             <field name='arch' type='xml'>
                 <tree>
-                    <field name='printer_model'/>
+                    <field name='model'/>
                     <field name='serial'/>
-                    <field name='printer_state'/>
-                    <field name='last_conn'/>
+                    <field name='is_available'/>
                     <field name='employee_id'/>
                 </tree>
             </field>
@@ -66,39 +65,27 @@
             <field name='model'>fpi.printer</field>
             <field name='arch' type='xml'>
                 <search>
-                    <field name='printer_model'/>
+                    <field name='model'/>
                     <field name='serial'/>
-                    <field name='printer_state'/>
+                    <field name='is_available'/>
                     <field name='employee_id'/>
-                    <field name='last_conn'/>
-                    
                 </search>
             </field>
         </record>
         <record
             id="fpi.printers_form"
             model="ir.ui.view">
-            <field name='name'>fpi.printer.form</field>
+            <field name='name'>fpi.printers.form</field>
             <field name='model'>fpi.printer</field>
             <field name='arch' type='xml'>
                 <form string="description">
-                    <header>
-                        Impresora
-                    </header>
-                    <sheet>
-                        <h1>
-                            <label string="Impresora"/>
-                        </h1>
-                        <group>
-                            <field name="printer_model"/>
-                            <field name="serial"/>
-                            <field name="printer_state"/>
-                            <field name="is_available"/>
-                            <field name="employee_id"/>
-                            <field name="last_conn"/>
-                            <field name="merge_invoices_orders"/>
-                        </group>
-                    </sheet>
+                    <group>
+                        <field name="model"/>
+                        <field name="serial"/>
+                        <field name="is_available"/>
+                        <field name="employee_id" widget="many2many_tags" options="{'no_create': True}"/>
+                        <field name="merge_invoices_orders"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -107,7 +94,6 @@
             model='ir.actions.act_window'>
             <field name='name'>Impresoras</field>
             <field name='res_model'>fpi.printer</field>
-            <field name='view_type'>form</field>
             <field name='view_mode'>tree,kanban,form,search</field>
         </record>
         <record id='fpi.document_tree' model='ir.ui.view'>
@@ -162,7 +148,6 @@
         <record id='fpi.document_window' model='ir.actions.act_window'>
             <field name='name'>Todos los documentos</field>
             <field name='res_model'>fpi.document</field>
-            <field name='view_type'>form</field>
             <field name='view_mode'>tree,search,form</field>
             <field name='view_id' ref='fpi.document_tree' />
             <field name='domain'>[('print_status','=',['pending', 'in_progress', 'failed']), ('printer_user_id', '=', uid)]</field>
@@ -173,19 +158,11 @@
             groups="fpi_manager,fpi_user"
             web_icon="fpi,static/description/icon.png"
             sequence="30" />
-
         <menuitem
             id='fpi.menu_fpi_list'
             name='Lista de impresiones en cola'
             parent='fpi.menu_root'
             sequence="0"/>
-        <menuitem
-            id='fpi.document_list_root_menu'
-            name='Todos los documentos'
-            action='fpi.document_window'
-            parent='fpi.menu_fpi_list'
-            sequence="0" />
-
         <menuitem
             id='fpi.menu_fpi_settings'
             name='Ajustes'
@@ -197,7 +174,11 @@
             parent='fpi.menu_fpi_settings'
             sequence="0"
             action='fpi.printers_window'/>
-
-
+        <menuitem
+            id='fpi.document_list_root_menu'
+            name='Todos los documentos'
+            action='fpi.document_window'
+            parent='fpi.menu_fpi_list'
+            sequence="0" />
     </data>
 </odoo>

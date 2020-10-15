@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	<data>
-		<record
+		<!-- <record
 			id='neonety.partner_concepts_kanban'
 			model='ir.ui.view'>
 			<field name='name'>neonety.partner.concepts.kanban</field>
@@ -34,7 +34,7 @@
 					</templates>
 				</kanban>
 			</field>
-		</record>
+		</record> -->
 		<record
 			id='neonety.partner_concepts_form'
 			model='ir.ui.view'>
@@ -79,8 +79,8 @@
 			model='ir.actions.act_window'>
 			<field name='name'>Conceptos sobre proveedores</field>
 			<field name='res_model'>neonety.partner.concept</field>
-			<field name='view_type'>form</field>
 			<field name='view_mode'>kanban,form,tree,search</field>
+			<field name='view_id' ref='neonety.partner_concepts_tree' />
 		</record>
 		<menuitem
 			id='neonety.menu_root'

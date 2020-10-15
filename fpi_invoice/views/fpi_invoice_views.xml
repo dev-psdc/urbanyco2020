@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='fpi_invoice.fiscal_printer_button' model='ir.ui.view'>
+            <field name='name'>fpi.invoice.fiscal.printer.button</field>
+            <field name='model'>account.move</field>
+            <field name='inherit_id' ref= "account.view_move_form" />
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='state']" position='before'>
+                    <field name='state' invisible="1"/>
+                    <field name='document_print_status' invisible="1"/>
+                    <button
+                        string='Imprimir en Impresora fiscal'
+                        attrs="{'invisible':[('state', '==', 'draft'), ('document_print_status', '!=', 'pending')]}"
+                        type='object'
+                        name='send_fiscal_printer_action'
+                        class="fpi-printer-button"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="fpi_invoice.fiscal_printer_message" model="ir.ui.view">
+            <field name='name'>fpi.invoice.fiscal.printer.message</field>
+            <field name='model'>account.move</field>
+            <field name='inherit_id' ref='account.view_move_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//div[@role='alert']" position='before'>
+                    <field name='document_print_status' invisible="1"/>
+                    <div class="alert alert-success fpi-printer-message" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('document_print_status', '!=', 'pending')]}">
+                        La factura ha sido enviada a la impresora fiscal.
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="fpi_invoice.fiscal_printer_account_invoice_tree" model="ir.ui.view">
+            <field name='name'>fpi.invoice.fiscal.printer.account.invoice.tree</field>
+            <field name='model'>account.move</field>
+            <field name='inherit_id' ref='account.view_invoice_tree'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//field[@name='name']" position='after'>
+                    <field name='document_fiscal_invoice_number'/>
+                </xpath>
+            </field>
+        </record>
+        <record id="fpi_invoice.fiscal_printer_account_move_form" model="ir.ui.view">
+            <field name='name'>fpi.invoice.fiscal.printer.account.move.form</field>
+            <field name='model'>account.move</field>
+            <field name='inherit_id' ref='account.view_move_form'/>
+            <field name='arch' type='xml'>
+                <xpath expr="//h1[@class='mt0']" position='after'>
+                    <field name='document_fiscal_invoice_number' readonly="1" class="oe_inline" string="Número de Factura Fiscal" attrs="{'invisible': [('document_fiscal_invoice_number', '==', False)]}" />
+                </xpath>
+            </field>
+        </record>
+        <record id='fpi_invoice.document_invoices_tree' model='ir.ui.view'>
+            <field name='name'>fpi.invoice.document.invoices.tree</field>
+            <field name='model'>fpi.document</field>
+            <field name='arch' type='xml'>
+                <tree create="false" edit="false">
+                    <field name="print_status"/>
+                    <field name="number" string="Documento Nro."/>
+                    <field name="invoice_type" string="Tipo de Factura"/>
+                    <field name="serial"/>
+                    <field name="write_date" string="Impreso el dia" />
+                    <field name="printer_user_id" string="Impreso por" />
+                </tree>
+            </field>
+        </record>
+        <record id='fpi_invoice.document_invoices_form' model='ir.ui.view'>
+            <field name='name'>fpi.invoice.document.invoices.form</field>
+            <field name='model'>fpi.document</field>
+            <field name='arch' type='xml'>
+                <form edit="false" create="false">
+                    <header>
+                        <h1>Documento Nro.: <field name="number"/></h1>
+                    </header>
+                    <sheet>
+                        <group>
+                            <p><strong>Tipo de Documento: </strong><field name="documents_type_printed"/></p>
+                            <p><strong>Tipo de Factura: </strong><field name="invoice_type"/></p>
+                            <p><strong>Enviado a impresión el: </strong><field name="write_date"/></p>
+                            <p><strong>Impreso por: </strong><field name="printer_user_id"/></p>
+                            <p><strong>Estatus de impresión: </strong><field name="print_status"/></p>
+                            <p><strong>Impresora usada: </strong><field name="serial"/></p>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record
+            id='fpi_invoice.document_invoices_search' model='ir.ui.view'>
+            <field name='name'>fpi.invoice.document.invoices.search</field>
+            <field name='model'>fpi.document</field>
+            <field name='arch' type='xml'>
+                <search>
+                    <field name='documents_type_printed'/>
+                    <field name='invoice_type'/>
+                    <field name='serial'/>
+                    <field name='print_status'/>
+                    <field name='printer_user_id'/>
+                    <field name='number'/>
+                </search>
+            </field>
+        </record>
+        <record
+            id='fpi_invoice.document_invoices_window' model='ir.actions.act_window'>
+            <field name='name'>Facturas de Venta y N/C</field>
+            <field name='res_model'>fpi.document</field>
+            <field name='view_mode'>tree,search,form</field>
+            <field name='view_id' ref='fpi_invoice.document_invoices_tree'/>
+            <field name='domain'>[('print_status','=',['pending', 'in_progress', 'failed']), ('printer_user_id', '=', uid), ('documents_type_printed', '=', 'account_move')]</field>
+        </record>
+        <menuitem
+            id='fpi_invoice.document_invoices_list_root_menu'
+            name='Facturas de Venta y N/C'
+            action='fpi_invoice.document_invoices_window'
+            parent='fpi.menu_fpi_list'
+            sequence="2" />
+    </data>
+</odoo>
